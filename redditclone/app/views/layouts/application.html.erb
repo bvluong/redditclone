@@ -1,0 +1,15 @@
+<% if flash[:errors] %>
+  <%= flash[:errors].each {|error| error } %>
+<% end %>
+
+<% if current_user %>
+  <h3>Welcome, <%= current_user.username %></h3>
+  <%= button_to "Sign Out", session_url, method: :delete %>
+<% else %>
+  <%= button_to "Login", new_session_url, method: :get %>
+<% end %>
+
+
+<%= link_to "All Subs", subs_url %>
+<br>
+    <%= yield %>
