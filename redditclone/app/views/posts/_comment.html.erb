@@ -3,7 +3,9 @@
   <ul>
     <li>
       <% childval.each do |c2| %>
+
         <h4><%= link_to c2.content, comment_url(c2) %> </h4>
+        (<%= c2.votes.sum(:value) %>)
         by <%= c2.author.username %>
         created_at <%= c2.created_at %>
 

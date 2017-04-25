@@ -1,7 +1,14 @@
-<h1> <%=@post.title%> </h1>
+
+<h1>
+  <%=@post.title%>
+  (<%= @post.votes.sum(:value) %>)
+</h1>
+
 <div class="border">
   <h3> content </h3>
   <%=@post.content%>
+  <%= button_to "Upvote", upvote_post_url %>
+  <%= button_to "Downvote", downvote_post_url %>
 </div>
 
 <br></br>
@@ -29,6 +36,7 @@
 <%@comments_by_parent_id[nil].each do |c1|%>
 
     <h4><%= link_to c1.content, comment_url(c1) %></h4>
+    (<%= c1.votes.sum(:value) %>)
     by <%= c1.author.username %>
     created_at <%= c1.created_at %>
 

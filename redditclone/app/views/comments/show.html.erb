@@ -1,5 +1,8 @@
 <h3>Reply to this comment</h3>
 
+<%= button_to "Upvote", upvote_comment_url %>
+<%= button_to "Downvote", downvote_comment_url %>
+
 <form action="<%=comments_url%>" method="post">
   <%= auth_token %>
 

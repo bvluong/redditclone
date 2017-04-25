@@ -21,7 +21,7 @@ class Comment < ApplicationRecord
 
   belongs_to :post
 
-  has_many :votes, as: :voteable
+  has_many :votes, as: :votable
 
   has_many :child_comments,
   primary_key: :id,
