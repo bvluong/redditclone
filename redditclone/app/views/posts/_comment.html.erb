@@ -1,0 +1,17 @@
+<% @comments_by_parent_id.each do |childkey, childval| %>
+  <%if c1.id == childkey %>
+  <ul>
+    <li>
+      <% childval.each do |c2| %>
+        <h4><%= link_to c2.content, comment_url(c2) %> </h4>
+        by <%= c2.author.username %>
+        created_at <%= c2.created_at %>
+
+        <%= render "comment", c1:c2  %>
+
+      <% end %>
+
+    </li>
+  </ul>
+  <% end %>
+<% end %>

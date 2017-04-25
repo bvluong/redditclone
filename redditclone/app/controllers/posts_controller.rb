@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :not_logged_in?, only: [:edit, :update, :new, :create]
 
   def new
     @post = Post.new
@@ -16,6 +17,8 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @all_comments = @post.comments.includes(:author)
+    @comments_by_parent_id = @post.comments_by_parent_id
   end
 
   def edit
@@ -47,9 +50,21 @@ class PostsController < ApplicationController
     redirect_to subs_url
   end
 
+  def upvote
+    @post = Post.find(params[:post_id])
+    @post.votes.create(value:1)
+    redirect_to sub_url(params[:id])
+  end
+
+  def downvote
+    @post = Post.find(params[:post_id])
+    @post.votes.create(value:-1)
+    redirect_to sub_url(params[:id])
+  end
+
   private
 
   def post_params
-    params.require(:post).permit(:title,:content,:user_id,sub_ids: [])
+    params.require(:post).permit(:title,:content,:user_id, sub_ids: [])
   end
 end

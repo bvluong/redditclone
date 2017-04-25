@@ -1,2 +1,37 @@
-<h1>Post#show</h1>
-<p>Find me in app/views/post/show.html.erb</p>
+<h1> <%=@post.title%> </h1>
+<div class="border">
+  <h3> content </h3>
+  <%=@post.content%>
+</div>
+
+<br></br>
+
+<%= link_to "Make New Post!", new_post_url %>
+<br>
+<% if current_user && current_user.id == @post.user_id %>
+  <%= link_to "Edit Sub", edit_post_url %>
+<% end %>
+
+<h3>Associated Subs for <%=@post.title%></h3>
+<ul>
+  <%@post.subs.each do |sub|%>
+  <li>
+    <%=link_to sub.title, sub_url(sub)%>
+  </li>
+  <% end %>
+</ul>
+
+<h3>  <%= link_to "Add a Comment to this Post!", new_post_comment_url(post_id: @post.id)  %> </h3>
+
+<h1>Comments!</h1>
+
+
+<%@comments_by_parent_id[nil].each do |c1|%>
+
+    <h4><%= link_to c1.content, comment_url(c1) %></h4>
+    by <%= c1.author.username %>
+    created_at <%= c1.created_at %>
+
+    <%= render "comment", c1: c1, comments_by_parent_id: @comments_by_parent_id %>
+
+<% end %>
